@@ -1,0 +1,78 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+#zhongwen {
+  background-color: #fff;
+}
+
+#zhongwen > vbox {
+  max-width: 25em;
+  overflow: hidden;
+  font-size: 1.1em;
+  padding: 4px;
+}
+
+popup#zhongwen > vbox:hover {
+  max-width: auto;
+  overflow: visible;
+}
+
+popup#zhongwen > arrowscrollbox {
+  -moz-binding: none;
+}
+
+#zhongwen label {
+  -moz-margin-start: 0px;
+  -moz-margin-end: 0px;
+  margin: 0px;
+  color: #aaa;
+}
+
+popup#zhongwen .col0:hover label,
+popup#zhongwen .col1:hover label {
+  font-size: 1.8em;
+  color: #000;
+}
+
+#zhongwen > vbox > hbox + hbox {
+  margin-top: 2px;
+}
+
+#zhongwen > vbox > hbox > hbox {
+  -moz-box-align: center;
+}
+
+#zhongwen .col0 > label,
+#zhongwen .col1 > label {
+  margin: 0px 1px;
+}
+
+#zhongwen .col2 > label {
+  margin: 0px 2px;
+  color: #22b;
+}
+
+#zhongwen .col2 > label:first-child {margin-left: 0px}
+#zhongwen .col2 > label:last-child {margin-right: 0px}
+
+#zhongwen .col3 > label {
+  color: #494;
+  font-size: 0.9em;
+}
+
+#zhongwen .fit0 .col0 > label:first-child,
+#zhongwen .fit0 .col0 > label:first-child + label,
+#zhongwen .fit0 .col1 > label:first-child,
+#zhongwen .fit0 .col1 > label:first-child + label,
+#zhongwen .fit0 .col2 > label:first-child,
+#zhongwen .fit0 .col2 > label:first-child + label,
+#zhongwen .fit1 .col0 > label:first-child,
+#zhongwen .fit1 .col1 > label:first-child,
+#zhongwen .fit1 .col2 > label:first-child {
+  color: #000;
+}
+
+#zhongwen .fit1 .col2 > label:first-child,
+#zhongwen .fit0 .col2 > label:first-child,
+#zhongwen .fit0 .col2 > label:first-child + label {
+  font-weight: bold;
+}

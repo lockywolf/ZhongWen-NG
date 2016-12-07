@@ -1,0 +1,144 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin" type="text/css"?>
+<?xml-stylesheet href="chrome://zhongwen/skin/mail.css" type="text/css"?>
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+  buttons="accept,cancel" onload="startup();" ondialogaccept="done();"
+  title="Zhong Wen">
+<script type="application/x-javascript">
+<![CDATA[
+function $(s) {
+  return document.getElementById(s);
+}
+
+function startup() {
+  $("input").value = pref().getCharPref("tmpl");
+  demo();
+}
+
+var a = [[
+  "\u82DB\u653F\u731B\u65BC\u864E".split(""),
+  "\u82DB\u653F\u731B\u4E8E\u864E".split(""),
+  "ke\u0304 zhe\u0300ng me\u030cng yu\u0301 hu\u030c".split(" "),
+  ["tyrannical government more ferocious than tiger"],
+  2
+],[
+  "\u82DB\u653F".split(""),
+  "\u82DB\u653F".split(""),
+  "ke\u0304 zhe\u0300ng".split(" "),
+  ["corrupt government"],
+  2
+]];
+
+function demo() {
+  var t = $("input").value;
+
+  if(!t) {
+    var p = pref();
+    if(p.prefHasUserValue("tmpl")) p.clearUserPref("tmpl");
+    t = p.getCharPref("tmpl");
+    $("input").value = t;
+  }
+
+  t = t.replace('"', "'", "g").match(/(\d+|\D+)/g);
+  for(i = 0; i < t.length; i++) {
+    t[i] = t[i]/1 || t[i];
+  }
+
+  var s, i, j, v, k;
+  s = ["<vbox>"];
+  for(i = 0; i < a.length; ++i) {
+    s.push('<hbox class="fit', a[i][4], '">');
+    for(j = 0; j < t.length; ++j) {
+      v = a[i][t[j]];
+      if(!v) {
+        s.push('<hbox><label value="', t[j], '" \/>');
+      } else {
+        s.push('<hbox class="col', t[j], '">');
+        for(k = 0; k < v.length; ++k) {
+          s.push('<label value="', v[k], '" crop="right" \/>');
+        }
+      }
+      s.push('<\/hbox>');
+    }
+    s.push('<\/hbox>');
+  }
+  s.push('<\/vbox>');
+
+  t = $("zhongwen");
+  v = document.createRange();
+  v.selectNode(t);
+  t.replaceChild(v.createContextualFragment(s.join("")), t.firstChild);
+}
+
+function pref() {
+  return Components.classes["@mozilla.org/preferences-service;1"]
+    .getService(Components.interfaces.nsIPrefService)
+    .getBranch("zhongwen.");
+}
+
+function done() {
+  var s = $("input").value;
+
+  var p = pref();
+  if(!s) {
+    if(p.prefHasUserValue("tmpl")) p.clearUserPref("tmpl");
+    s = p.getCharPref("tmpl");
+  } else {
+    p.setCharPref("tmpl", s.replace('"', "'", "g"));
+  }
+
+  var n = window, i = 5;
+  while((n = n.opener) != null && i--) {
+    if(typeof n.ZhongWen == "object") {
+      s = s.match(/(\d+|\D+)/g);
+      for(i = 0; i < s.length; i++) {
+        s[i] = s[i]/1 || s[i];
+      }
+      return n.ZhongWen.tmpl = s;
+    }
+  }
+  return true;
+}
+]]>
+</script>
+<vbox align="stretch">
+  <hbox pack="center">
+    <vbox align="start" style="font:14pt serif">
+      <hbox>
+        <label value="0"/>
+        <label value="= &#33499;&#25919;&#29467;&#26044;&#34382;" style="color:#000"/>
+      </hbox>
+      <hbox>
+        <label value="1"/>
+        <label value="= &#33499;&#25919;&#29467;&#20110;&#34382;" style="color:#000"/>
+      </hbox>
+      <hbox>
+        <label value="2"/>
+        <label value="= ke&#772; zhe&#768;ng me&#780;ng yu&#769; hu&#780;" style="color:#22b"/>
+      </hbox>
+      <hbox>
+        <label value="3"/>
+        <label value="= corrupt official more ferocious than tiger" style="color:#494"/>
+      </hbox>
+    </vbox>
+  </hbox>
+  <separator orient="horizontal"/>
+  <groupbox align="center" style="min-width:300px; padding:1.5em">
+    <hbox align="stretch">
+      <textbox id="input" style="width:8em; font:14pt serif; margin-right:2px"
+        onkeypress="if(event.keyCode==13){demo();event.preventDefault();}"/>
+      <button label="&gt;&gt;" style="font-size:12pt; margin-left:0px; min-width:2em" oncommand="demo();"/>
+    </hbox>
+    <separator orient="horizontal"/>
+    <vbox id="zhongwen" style="border:1px solid #aaa; background:#ffd; font-size:1.1em; min-width:5em">
+      <vbox style="height:2em"></vbox>
+    </vbox>
+  </groupbox>
+  <separator/>
+  <hbox align="center" pack="end" style="font-size:0.8em">
+    <label value="Translations provided by " style="margin-right:0px" disabled="true"/>
+    <label value="CC-CEDICT" class="text-link" style="margin-left:0px" 
+      href="http://us.mdbg.net/chindict/chindict.php?page=cedict"/>
+  </hbox>
+</vbox>
+</dialog>

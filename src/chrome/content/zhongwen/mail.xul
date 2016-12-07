@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<overlay id="zhongwen-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script type="application/x-javascript" src="chrome://zhongwen/content/mail.js"/>
+  <vbox id="messagepanebox">
+    <popup id="zhongwen" onpopupshown="ZhongWen.alignMenu(this);">
+      <label value="werd"/>
+    </popup>
+  </vbox>
+</overlay>
